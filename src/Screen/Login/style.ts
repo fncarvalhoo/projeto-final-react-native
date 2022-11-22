@@ -16,6 +16,13 @@ export const styles = StyleSheet.create({
     height: 200,
     width: 250,
   },
+  textoLogo: {
+    color: "#FFCF00",
+    fontWeight: "bold",
+    fontSize: 35,
+    marginBottom: 10,
+    marginTop: -20,
+  },
   input: {
     backgroundColor: "white",
     fontSize: 17,

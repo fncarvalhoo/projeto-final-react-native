@@ -16,9 +16,23 @@ export const Login = ({ navigation }) => {
     });
   };
 
+  const Home = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Home" }],
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <AntDesign name="arrowleft" size={24} color="white" style={styles.icon} />
+      <TouchableOpacity onPress={() => Home()}>
+        <AntDesign
+          name="arrowleft"
+          size={24}
+          color="white"
+          style={styles.icon}
+        />
+      </TouchableOpacity>
       <Image style={styles.logo} source={logo} />
       <Text style={styles.textoLogo}>Login</Text>
       <View style={styles.areaLogin}>
