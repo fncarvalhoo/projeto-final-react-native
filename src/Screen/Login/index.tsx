@@ -20,6 +20,7 @@ export const Login = ({ navigation }) => {
     <View style={styles.container}>
       <AntDesign name="arrowleft" size={24} color="white" style={styles.icon} />
       <Image style={styles.logo} source={logo} />
+      <Text style={styles.textoLogo}>Login</Text>
       <View style={styles.areaLogin}>
         <TextInput
           placeholder="Email"
@@ -50,7 +51,7 @@ export const Login = ({ navigation }) => {
             </Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={() => Entrar()}>
+        <TouchableOpacity style={styles.botao} onPress={() => Home()}>
           <Text style={styles.textoBotao}>Entrar</Text>
         </TouchableOpacity>
       </View>
