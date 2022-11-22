@@ -5,14 +5,22 @@ import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
   const [mostrar, setMostrar] = useState("");
   const [ocultar, setOcultar] = useState(true);
+
+  const Registrar = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Cadastro" }],
+    });
+  };
 
   return (
     <View style={styles.container}>
       <AntDesign name="arrowleft" size={24} color="white" style={styles.icon} />
       <Image style={styles.logo} source={logo} />
+      <Text style={styles.textoLogo}>Login</Text>
       <View style={styles.areaLogin}>
         <TextInput
           placeholder="Email"
@@ -43,13 +51,13 @@ export const Login = () => {
             </Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={() => Entrar()}>
+        <TouchableOpacity style={styles.botao} onPress={() => Home()}>
           <Text style={styles.textoBotao}>Entrar</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.areaTexto}>
         <Text style={styles.texto}>Não tem uma conta? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => Registrar()}>
           <Text style={styles.textoRegistro}>Registre-se</Text>
         </TouchableOpacity>
       </View>
