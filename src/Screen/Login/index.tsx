@@ -5,9 +5,16 @@ import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
   const [mostrar, setMostrar] = useState("");
   const [ocultar, setOcultar] = useState(true);
+
+  const Registrar = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Cadastro" }],
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -49,7 +56,7 @@ export const Login = () => {
       </View>
       <View style={styles.areaTexto}>
         <Text style={styles.texto}>Não tem uma conta? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => Registrar()}>
           <Text style={styles.textoRegistro}>Registre-se</Text>
         </TouchableOpacity>
       </View>
