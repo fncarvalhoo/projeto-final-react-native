@@ -63,9 +63,11 @@ export const Cliente = () => {
             selectionColor={"black"}
           />
         </View>
+        {/* Colocar aqui um ALERT ''perfil atualizado com sucesso   */}
         <TouchableOpacity style={styles.botao} onPress={() => Home()}>
           <Text style={styles.textoBotao}>Atualizar</Text>
         </TouchableOpacity>
+        {/* Colocar aqui um ALERT ''perfil Deletado com sucesso */}
         <TouchableOpacity style={styles.botao} onPress={() => Home()}>
           <Text style={styles.textoBotao}>Deletar</Text>
         </TouchableOpacity>
