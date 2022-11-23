@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
-import { View, Text, StatusBar, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import logoNav from "../../Assets/LogoNav.png";
-import { produtos } from "../../Services/api";
+import { getProduto } from "../../Services/api/api";
 import { styles } from "./styled";
 import { getProduto, listaProdutos } from "../../Services/repository/produtoRepository"
 import { textChangeRangeIsUnchanged } from "typescript";
 
 export const Home = () => {
-
   const [carregando, setCarregando] = useState<boolean>(true);
   const [listaProdutos, setlistaProdutos] = useState<listaProdutos[]>([]);
 
@@ -27,6 +35,7 @@ export const Home = () => {
         backgroundColor="black"
       />
       <View >
+
         <View style={styles.nav}>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.textButton}>LOGIN</Text>
@@ -55,7 +64,6 @@ export const Home = () => {
             }
             }
           />
-
         }
       </View>
     </View>

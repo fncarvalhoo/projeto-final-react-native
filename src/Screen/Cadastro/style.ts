@@ -52,20 +52,6 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  mostrar: {
-    zIndex: 10,
-    width: 80,
-    alignItems: "center",
-    position: "absolute",
-    marginLeft: 280,
-    marginTop: 22,
-  },
-  mostrarTexto: {
-    color: "#808080",
-    fontSize: 15,
-    marginLeft: 40,
-    marginTop: -5,
-  },
   areaLogin: {
     width: "100%",
   },
@@ -76,7 +62,7 @@ export const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  textoRegistro: {
+  textoLogin: {
     color: "#FFCF00",
     fontWeight: "bold",
   },
