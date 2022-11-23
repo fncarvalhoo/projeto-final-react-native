@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 const produtos = axios.create({
-  baseURL: "https://3f8b-138-117-223-22.sa.ngrok.io/",
+  baseURL: "https://5857-138-117-223-22.sa.ngrok.io/",
   headers: {
     "Content-Type": "application/json",
   },
