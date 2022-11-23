@@ -12,6 +12,7 @@ import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
+import CustomAlert from "../../Components/CustomAlert";
 
 export const Cadastro = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,6 +21,22 @@ export const Cadastro = ({ navigation }) => {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [dataNasc, setDataNasc] = useState("");
+
+  const [titulo, setTitulo] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [visibleDialog, setVisibleDialog] = useState(false);
+
+  const showDialog = (titulo, mensagem, tipo) => {
+    setVisibleDialog(true);
+    setTitulo(titulo);
+    setMensagem(mensagem);
+    setTipo(tipo);
+  };
+
+  const hideDialog = (status) => {
+    setVisibleDialog(status);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -33,10 +50,14 @@ export const Cadastro = ({ navigation }) => {
       dataNascimento: dataNasc,
     };
 
-    clienteService.postCliente(user).then((res) => {
-      console.log(res);
-      console.log(res.data);
-    });
+    clienteService
+      .postCliente(user)
+      .then((res) => {
+        showDialog("Sucesso", "Usuário cadastrado com sucesso", "SUCESSO");
+      })
+      .catch((error) => {
+        showDialog("Erro", "Cadastro inválido", "ERRO");
+      });
   };
 
   const Logar = () => {
@@ -117,6 +138,13 @@ export const Cadastro = ({ navigation }) => {
             <Text style={styles.textoLogin}>Faça login</Text>
           </TouchableOpacity>
         </View>
+        <CustomAlert
+          titulo={titulo}
+          mensagem={mensagem}
+          tipo={tipo}
+          visible={visibleDialog}
+          onClose={hideDialog}
+        ></CustomAlert>
       </View>
     </ScrollView>
   );
