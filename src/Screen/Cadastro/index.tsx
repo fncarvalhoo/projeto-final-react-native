@@ -25,12 +25,12 @@ export const Cadastro = ({ navigation }) => {
     event.preventDefault();
 
     const user = {
-      email: "fernandocarvalho@gmail.com",
-      usuario: "FNCarvalho",
-      nome: "Fernando Carvalho",
-      cpf: "183.214.621-81",
-      senha: "flamengo",
-      dataNascimento: "1992-02-01T02:00:00Z",
+      email: email,
+      usuario: usuario,
+      nome: nome,
+      cpf: cpf,
+      senha: senha,
+      dataNascimento: dataNasc,
     };
 
     clienteService.postCliente(user).then((res) => {
