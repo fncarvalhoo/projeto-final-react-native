@@ -58,12 +58,21 @@ export const Login = ({ navigation }) => {
       .then((response) => {
         console.log(email);
         console.log("Deu certo");
-        Home();
+        clienteService
+          .getUserBySenha(senha)
+          .then((response) => {
+            console.log(senha);
+            console.log("Deu certo");
+            Home();
+          })
+          .catch((error) => {
+            showDialog("Erro", "Senha inválid", "ERRO");
+            console.log(error);
+            console.log("Deu erro");
+          });
       })
       .catch((error) => {
         showDialog("Erro", "Email inválido", "ERRO");
-        // setTitulo("Erro");
-        // setMensagem("Email inválido");
         console.log(error);
         console.log("Deu erro");
       });
@@ -97,6 +106,7 @@ export const Login = ({ navigation }) => {
           placeholderTextColor="#000000"
           style={styles.input}
           selectionColor={"black"}
+          onChangeText={(e) => setSenha(e)}
         />
         <TouchableOpacity
           style={styles.mostrar}
