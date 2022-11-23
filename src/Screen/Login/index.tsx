@@ -1,13 +1,41 @@
 import React, { useState } from "react";
-import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import clienteService from "../../Services/requests/clienteService";
+import { setSyntheticLeadingComments } from "typescript";
+import CustomAlert from "../../Components/CustomAlert";
 
 export const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [mostrar, setMostrar] = useState("");
   const [ocultar, setOcultar] = useState(true);
+
+  const [titulo, setTitulo] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [visibleDialog, setVisibleDialog] = useState(false);
+
+  const showDialog = (titulo, mensagem, tipo) => {
+    setVisibleDialog(true);
+    setTitulo(titulo);
+    setMensagem(mensagem);
+    setTipo(tipo);
+  };
+
+  const hideDialog = (status) => {
+    setVisibleDialog(status);
+  };
 
   const Registrar = () => {
     navigation.reset({
@@ -21,6 +49,33 @@ export const Login = ({ navigation }) => {
       index: 0,
       routes: [{ name: "Home" }],
     });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    clienteService
+      .getUserByEmail(email)
+      .then((response) => {
+        console.log(email);
+        console.log("Deu certo");
+        clienteService
+          .getUserBySenha(senha)
+          .then((response) => {
+            console.log(senha);
+            console.log("Deu certo");
+            Home();
+          })
+          .catch((error) => {
+            showDialog("Erro", "Senha inválid", "ERRO");
+            console.log(error);
+            console.log("Deu erro");
+          });
+      })
+      .catch((error) => {
+        showDialog("Erro", "Email inválido", "ERRO");
+        console.log(error);
+        console.log("Deu erro");
+      });
   };
 
   return (
@@ -41,6 +96,7 @@ export const Login = ({ navigation }) => {
           placeholderTextColor="#000000"
           style={styles.input}
           selectionColor={"black"}
+          onChangeText={(e) => setEmail(e)}
         />
       </View>
       <View style={styles.areaLogin}>
@@ -50,6 +106,7 @@ export const Login = ({ navigation }) => {
           placeholderTextColor="#000000"
           style={styles.input}
           selectionColor={"black"}
+          onChangeText={(e) => setSenha(e)}
         />
         <TouchableOpacity
           style={styles.mostrar}
@@ -65,7 +122,7 @@ export const Login = ({ navigation }) => {
             </Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={() => Home()}>
+        <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
           <Text style={styles.textoBotao}>Entrar</Text>
         </TouchableOpacity>
       </View>
@@ -75,6 +132,15 @@ export const Login = ({ navigation }) => {
           <Text style={styles.textoRegistro}>Registre-se</Text>
         </TouchableOpacity>
       </View>
+      {visibleDialog && (
+        <CustomAlert
+          titulo={titulo}
+          mensagem={mensagem}
+          tipo={tipo}
+          visible={visibleDialog}
+          onClose={hideDialog}
+        ></CustomAlert>
+      )}
     </View>
   );
 };
