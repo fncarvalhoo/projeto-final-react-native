@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StatusBar,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-  FlatList,
-} from "react-native";
+import { View, Text, StatusBar, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList, } from "react-native";
 import logoNav from "../../Assets/LogoNav.png";
 import { styles } from "./styled";
-import {
-  getProduto,
-  listaProdutos,
-} from "../../Services/repository/produtoRepository";
+import { getProduto, listaProdutos, } from "../../Services/repository/produtoRepository";
 import { textChangeRangeIsUnchanged } from "typescript";
+import { ProdutoCard } from "../ProdutoComponent";
 
 export const Home = () => {
   const [carregando, setCarregando] = useState<boolean>(true);
   const [listaProdutos, setlistaProdutos] = useState<listaProdutos[]>([]);
 
+ const [indexSelecionado, setIndexSelecionado] = useState<string>("");
+ const [modal, setModal] = useState<boolean>(false);
+
   useEffect(() => {
+    requisicaoListaProdutos()
+  }, []);
+
+  function requisicaoListaProdutos(){
+    setCarregando(true);
     getProduto()
       .then((res) => {
         setlistaProdutos(res.data);
@@ -30,7 +27,7 @@ export const Home = () => {
         console.log(err);
       })
       .finally(() => setCarregando(false));
-  }, []);
+  }
 
   return (
     <View style={styles.containerBackground}>
@@ -54,17 +51,11 @@ export const Home = () => {
             numColumns={2}
             renderItem={({ item }) => {
               return (
-                <View style={styles.container}>
-                  <View style={styles.card}>
-                    <Image
-                      style={styles.imgCard}
-                      source={{ uri: item.fotoLink }}
-                    />
-                    <Text style={styles.title}>{item.nome}</Text>
-                    {/* <Text style={styles.title}>{item.descricao}</Text> */}
-                    <Text style={styles.price}> R${item.valor},00</Text>
-                  </View>
-                </View>
+                <ProdutoCard 
+                produto={item}
+                setIndexSelecionado={setIndexSelecionado}
+                setModal={setModal}
+                 />
               );
             }}
           />
