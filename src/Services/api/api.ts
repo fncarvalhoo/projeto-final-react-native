@@ -7,9 +7,8 @@ const produtos = axios.create({
   },
 });
 
-interface listaProdutos {
+export interface listaProdutos {
   id: string;
-  r;
   nome: string;
   descricao: string;
   qtdEstoque: string;
