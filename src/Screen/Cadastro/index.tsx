@@ -11,8 +11,34 @@ import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import clienteService from "../../Services/requests/clienteService";
 
 export const Cadastro = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [usuario, setUsuario] = useState("");
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [senha, setSenha] = useState("");
+  const [dataNasc, setDataNasc] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const user = {
+      email: email,
+      usuario: usuario,
+      nome: nome,
+      cpf: cpf,
+      senha: senha,
+      dataNascimento: dataNasc,
+    };
+
+    clienteService.postCliente(user).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
+  };
+
   const Logar = () => {
     navigation.reset({
       index: 0,
@@ -44,39 +70,45 @@ export const Cadastro = ({ navigation }) => {
             placeholderTextColor="#000000"
             style={styles.input}
             selectionColor={"black"}
+            onChangeText={(e) => setCpf(e)}
           />
           <TextInput
             placeholder="Nome"
             placeholderTextColor="#000000"
             style={styles.input}
             selectionColor={"black"}
+            onChangeText={(e) => setNome(e)}
           />
           <TextInput
             placeholder="Nome de Usuário"
             placeholderTextColor="#000000"
             style={styles.input}
             selectionColor={"black"}
+            onChangeText={(e) => setUsuario(e)}
           />
           <TextInput
             placeholder="Email"
             placeholderTextColor="#000000"
             style={styles.input}
             selectionColor={"black"}
+            onChangeText={(e) => setEmail(e)}
           />
           <TextInput
             placeholder="Senha"
             placeholderTextColor="#000000"
             style={styles.input}
             selectionColor={"black"}
+            onChangeText={(e) => setSenha(e)}
           />
           <TextInput
             placeholder="Data de Nascimento"
             placeholderTextColor="#000000"
             style={styles.input}
             selectionColor={"black"}
+            onChangeText={(e) => setDataNasc(e)}
           />
         </View>
-        <TouchableOpacity style={styles.botao} onPress={() => Home()}>
+        <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
           <Text style={styles.textoBotao}>Cadastrar</Text>
         </TouchableOpacity>
         <View style={styles.areaTexto}>
