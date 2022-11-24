@@ -25,18 +25,6 @@ function Tabs() {
       }}
     >
       <Tab.Screen
-        name="Login"
-        component={Login}
-        options={{
-          tabBarStyle: {
-            display: "none",
-          },
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="sign-in" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Home"
         component={Home}
         options={{
@@ -51,6 +39,18 @@ function Tabs() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Login"
+        component={Login}
+        options={{
+          tabBarStyle: {
+            display: "none",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="sign-in" size={size} color={color} />
           ),
         }}
       />
