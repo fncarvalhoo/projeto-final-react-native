@@ -4,7 +4,8 @@ import logoNav from "../../Assets/LogoNav.png";
 import { styles } from "./styled";
 import { getProduto, listaProdutos, } from "../../Services/repository/produtoRepository";
 import { textChangeRangeIsUnchanged } from "typescript";
-import { ProdutoCard } from "../ProdutoComponent";
+import { ProdutoCard } from "../../Components/ProdutoComponent/index";
+import { ModalStatus } from "../../Components/Modais/Modal";
 
 export const Home = () => {
   const [carregando, setCarregando] = useState<boolean>(true);
@@ -60,6 +61,12 @@ export const Home = () => {
             }}
           />
         )}
+        {modal &&
+        <ModalStatus
+          id={indexSelecionado}
+          modal={modal}
+          setModal={setModal}
+      />}
       </View>
     </View>
   );
