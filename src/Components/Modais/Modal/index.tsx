@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Modal, Text, ModalProps, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { styles } from './styles';
 import Exit from "../../../Assets/close.png"
-import { getProdutoEspecifico, produtoStatusProps } from "../../../Services/repository/produtoRepository";
+import { getProdutoEspecifico, listaProdutos, produtoStatusProps } from "../../../Services/repository/produtoRepository";
+import {CarrinhoContexto} from "../../../Context/CarrinhoContext";
 
 interface ModalStatusProps extends ModalProps {
     modal: boolean;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     id: string;
+    valor?: number
 }
 
 export const ModalStatus = ({ modal, setModal, id, ...rest }: ModalStatusProps) => {
@@ -23,6 +25,32 @@ export const ModalStatus = ({ modal, setModal, id, ...rest }: ModalStatusProps) 
             setCarregando(false);
         })
     }, [])
+
+    const salvaListaDeProdutos = useContext(CarrinhoContexto).salvaListaDeProdutos
+        // let precoRandomico = Math.floor(Math.random())
+
+    function botaProdutoNoCarrinho (){
+        console.log(produtoStatus.id);
+        console.log(produtoStatus.nome);
+        console.log(produtoStatus.valor);
+        let produtoComPreco : listaProdutos = {
+            
+            id: produtoStatus.id,
+            nome: produtoStatus.nome,
+            descricao: produtoStatus.descricao,
+            qtdEstoque: produtoStatus.qtdEstoque,
+            valor: produtoStatus.valor,
+            idCategoria: produtoStatus.idCategoria,
+            nomeCategoria: produtoStatus.nomeCategoria,
+            idFuncionario: produtoStatus.idFuncionario,
+            nomeFuncionario: produtoStatus.nomeFuncionario,
+            dataFabricacao: produtoStatus.dataFabricacao,
+            fotoLink: produtoStatus.fotoLink,
+            // valor: precoRandomico
+        }
+        salvaListaDeProdutos(produtoComPreco)
+        setModal (false);
+    }
 
 
     return (
@@ -68,7 +96,7 @@ export const ModalStatus = ({ modal, setModal, id, ...rest }: ModalStatusProps) 
                             </ScrollView>
                             <View style={styles.footerContainer}>
                                 <Text style={styles.title}>R${produtoStatus.valor},00</Text>
-                                <TouchableOpacity style={styles.botao}>
+                                <TouchableOpacity style={styles.botao} onPress={() => botaProdutoNoCarrinho()}>
                                     <Text style={styles.textButton}>COMPRAR</Text>
                                 </TouchableOpacity>
                             </View>

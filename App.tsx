@@ -4,6 +4,7 @@ import { Login } from "./src/Screen/Login";
 import { PageClient } from "./src/Screen/PageClient/index";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Carrinho } from "./src/Screen/Carrinho";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -28,6 +29,11 @@ export default function App() {
         <Stack.Screen
           name="PageClient"
           component={PageClient}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Carrinho"
+          component={Carrinho}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

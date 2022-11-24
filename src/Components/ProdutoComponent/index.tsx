@@ -3,17 +3,21 @@ import { Image, Text, TouchableOpacity, TouchableOpacityProps, View } from "reac
 import { listaProdutos } from "../../Services/repository/produtoRepository";
 import { styles } from "./styles";
 
+import {CarrinhoContexto} from"../../Context/CarrinhoContext";
+
 interface ProdutosCardProps extends TouchableOpacityProps {
     produto: listaProdutos;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     setIndexSelecionado: React.Dispatch<React.SetStateAction<string>>;
+    setPrecoSelecionado?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const ProdutoCard = ({ produto, setModal, setIndexSelecionado }: ProdutosCardProps) => {
+export const ProdutoCard = ({ produto, setModal, setPrecoSelecionado, setIndexSelecionado }: ProdutosCardProps) => {
 
     function abreModal(){
         setModal(true);
         setIndexSelecionado(produto.id);
+        setPrecoSelecionado && setPrecoSelecionado(produto.valor)
     }
 
     return <TouchableOpacity onPress={abreModal}>
