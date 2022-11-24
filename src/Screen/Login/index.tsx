@@ -1,22 +1,18 @@
+//#region Imports
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
-import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
-import { setSyntheticLeadingComments } from "typescript";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import IconSeta from "../../Components/IconSeta/IconSeta";
+import TextInputComponent from "../../Components/TextInput/TextInput";
+import ButtonComponent from "../../Components/Botao/Botao";
+//#endregion
 
 export const Login = ({ navigation }) => {
+  //#region Values
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [mostrar, setMostrar] = useState("");
@@ -26,7 +22,9 @@ export const Login = ({ navigation }) => {
   const [mensagem, setMensagem] = useState("");
   const [tipo, setTipo] = useState("");
   const [visibleDialog, setVisibleDialog] = useState(false);
+  //#endregion
 
+  //#region FunctionsForCustomAlert
   const showDialog = (titulo, mensagem, tipo) => {
     setVisibleDialog(true);
     setTitulo(titulo);
@@ -37,11 +35,13 @@ export const Login = ({ navigation }) => {
   const hideDialog = (status) => {
     setVisibleDialog(status);
   };
+  //#endregion
 
-  const Registrar = () => {
+  //#region Navigation
+  const Register = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: "Cadastro" }],
+      routes: [{ name: "Register" }],
     });
   };
 
@@ -51,33 +51,28 @@ export const Login = ({ navigation }) => {
       routes: [{ name: "Home" }],
     });
   };
+  //#endregion
 
-  const handleSubmit = (event) => {
+  //#region FunctionLogin
+  const LoginClient = (event) => {
     event.preventDefault();
     clienteService
       .getUserByEmail(email)
       .then((response) => {
-        console.log(email);
-        console.log("Deu certo");
         clienteService
           .getUserBySenha(senha)
           .then((response) => {
-            console.log(senha);
-            console.log("Deu certo");
             Home();
           })
           .catch((error) => {
-            showDialog("Erro", "Senha inválid", "ERRO");
-            console.log(error);
-            console.log("Deu erro");
+            showDialog("Erro", "Senha inválida", "ERRO");
           });
       })
       .catch((error) => {
         showDialog("Erro", "Email inválido", "ERRO");
-        console.log(error);
-        console.log("Deu erro");
       });
   };
+  //#endregion
 
   return (
     <View style={styles.container}>
@@ -85,13 +80,7 @@ export const Login = ({ navigation }) => {
       <Image style={styles.logo} source={logo} />
       <Text style={styles.textoLogo}>Login</Text>
       <View style={styles.areaLogin}>
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor="#000000"
-          style={styles.input}
-          selectionColor={"black"}
-          onChangeText={(e) => setEmail(e)}
-        />
+        <TextInputComponent placeHolder={"Email"} setValue={setEmail} />
       </View>
       <View style={styles.areaLogin}>
         <TextInput
@@ -116,13 +105,11 @@ export const Login = ({ navigation }) => {
             </Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
-          <Text style={styles.textoBotao}>Entrar</Text>
-        </TouchableOpacity>
+        <ButtonComponent setAction={LoginClient} texto={"Entrar"} />
       </View>
       <View style={styles.areaTexto}>
         <Text style={styles.texto}>Não tem uma conta? </Text>
-        <TouchableOpacity onPress={() => Registrar()}>
+        <TouchableOpacity onPress={() => Register()}>
           <Text style={styles.textoRegistro}>Registre-se</Text>
         </TouchableOpacity>
       </View>
