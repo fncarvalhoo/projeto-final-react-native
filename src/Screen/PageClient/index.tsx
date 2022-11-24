@@ -10,7 +10,7 @@ import IconSeta from "../../Components/IconSeta/IconSeta";
 import ButtonComponent from "../../Components/Botao/Botao";
 //#endregion
 
-export const Cliente = ({ navigation }) => {
+export const PageClient = ({ navigation }) => {
   //#region Values
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
@@ -39,7 +39,7 @@ export const Cliente = ({ navigation }) => {
   //#endregion
 
   //#region FunctionPut
-  const handleSubmit = (event) => {
+  const PutClient = (event) => {
     const dados = {
       cpf: cpf,
       dataNascimento: dataNascimento,
@@ -49,15 +49,11 @@ export const Cliente = ({ navigation }) => {
       usuario: usuario,
     };
     event.preventDefault();
-    // clienteService
-    //   .getUserByCpf(cpf)
-    //   .then((res) => {
     clienteService
       .putCliente(cpf, dados)
       .then((res) => {
         showDialog("Sucesso", "Conta atualizada com sucesso", "SUCESSO");
       })
-      // })
       .catch((error) => {
         showDialog("Erro", "Problema ao atualizar a conta", "ERRO");
       });
@@ -65,7 +61,7 @@ export const Cliente = ({ navigation }) => {
   //#endregion
 
   //#region FunctionDelete
-  function handleDeleteProduct(event) {
+  function DeleteClient(event) {
     event.preventDefault();
     clienteService
       .deleteCliente(cpf)
@@ -107,8 +103,8 @@ export const Cliente = ({ navigation }) => {
             setValue={setDataNascimento}
           />
         </View>
-        <ButtonComponent setAction={handleSubmit} texto={"Atualizar"} />
-        <ButtonComponent setAction={handleDeleteProduct} texto={"Deletar"} />
+        <ButtonComponent setAction={PutClient} texto={"Atualizar"} />
+        <ButtonComponent setAction={DeleteClient} texto={"Deletar"} />
         <CustomAlert
           titulo={titulo}
           mensagem={mensagem}

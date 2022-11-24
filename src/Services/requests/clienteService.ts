@@ -1,4 +1,4 @@
-import { api } from "../api/cliente";
+import { api } from "../api/api";
 
 const postCliente = (data) => {
   return api.post(`cliente`, data);

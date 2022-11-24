@@ -41,7 +41,7 @@ export const Login = ({ navigation }) => {
   const Register = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: "Cadastro" }],
+      routes: [{ name: "Register" }],
     });
   };
 

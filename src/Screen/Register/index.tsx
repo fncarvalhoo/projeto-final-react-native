@@ -14,9 +14,11 @@ import { AntDesign } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
 import CustomAlert from "../../Components/CustomAlert/CustomAlert";
 import IconSeta from "../../Components/IconSeta/IconSeta";
+import TextInputComponent from "../../Components/TextInput/TextInput";
+import ButtonComponent from "../../Components/Botao/Botao";
 //#endregion
 
-export const Cadastro = ({ navigation }) => {
+export const Register = ({ navigation }) => {
   //#region Values
   const [email, setEmail] = useState("");
   const [usuario, setUsuario] = useState("");
@@ -45,7 +47,7 @@ export const Cadastro = ({ navigation }) => {
   //#endregion
 
   //#region FunctionPost
-  const handleSubmit = (event) => {
+  const registerClient = (event) => {
     event.preventDefault();
 
     const user = {
@@ -69,7 +71,7 @@ export const Cadastro = ({ navigation }) => {
   //#endregion
 
   //#region Navigation
-  const Logar = () => {
+  const Login = () => {
     navigation.reset({
       index: 0,
       routes: [{ name: "Login" }],
@@ -90,55 +92,23 @@ export const Cadastro = ({ navigation }) => {
         <Image style={styles.logo} source={logo} />
         <Text style={styles.textoLogo}>Cadastro</Text>
         <View style={styles.areaLogin}>
-          <TextInput
-            placeholder="CPF"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setCpf(e)}
+          <TextInputComponent placeHolder={"CPF"} setValue={setCpf} />
+          <TextInputComponent placeHolder={"Nome"} setValue={setNome} />
+          <TextInputComponent
+            placeHolder={"Nome de Usuário"}
+            setValue={setUsuario}
           />
-          <TextInput
-            placeholder="Nome"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setNome(e)}
-          />
-          <TextInput
-            placeholder="Nome de Usuário"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setUsuario(e)}
-          />
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setEmail(e)}
-          />
-          <TextInput
-            placeholder="Senha"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setSenha(e)}
-          />
-          <TextInput
-            placeholder="Data de Nascimento"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setDataNasc(e)}
+          <TextInputComponent placeHolder={"Email"} setValue={setEmail} />
+          <TextInputComponent placeHolder={"Senha"} setValue={setSenha} />
+          <TextInputComponent
+            placeHolder={"Data de Nascimento"}
+            setValue={setDataNasc}
           />
         </View>
-        <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
-          <Text style={styles.textoBotao}>Cadastrar</Text>
-        </TouchableOpacity>
+        <ButtonComponent setAction={registerClient} texto={"Cadastrar"} />
         <View style={styles.areaTexto}>
           <Text style={styles.texto}>Já tem uma conta? </Text>
-          <TouchableOpacity onPress={() => Logar()}>
+          <TouchableOpacity onPress={() => Login()}>
             <Text style={styles.textoLogin}>Faça login</Text>
           </TouchableOpacity>
         </View>
