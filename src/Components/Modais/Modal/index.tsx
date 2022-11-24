@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Modal, Text, ModalProps, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { styles } from './styles';
 import Exit from "../../../Assets/close.png"
-import { getProdutoEspecifico, produtoStatusProps } from "../../../Services/repository/produtoRepository";
+import { getProdutoEspecifico, listaProdutos, produtoStatusProps } from "../../../Services/repository/produtoRepository";
+import { CarrinhoContexto } from "../../../Context/CarrinhoContext";
 
 interface ModalStatusProps extends ModalProps {
     modal: boolean;
@@ -15,12 +16,32 @@ export const ModalStatus = ({ modal, setModal, id, ...rest }: ModalStatusProps) 
     const [produtoStatus, setProdutoStatus] = useState<produtoStatusProps>()
     useEffect(()=>{
         getProdutoEspecifico(id).then((res)=>{
-            console.log(res.data);
+            setProdutoStatus(res.data);
         }).catch((err)=>{
             console.log(err);
         })
     },[])
 
+    const salvaListaDeProdutos = useContext(CarrinhoContexto).salvaListaDeProdutos
+
+    function botaProdutoNoCarrinho (){
+        let produtoComPreco : listaProdutos = {
+            id: produtoStatus.id,
+            nome: produtoStatus.nome,
+            descricao: produtoStatus.descricao,
+            qtdEstoque: produtoStatus.qtdEstoque,
+            valor: produtoStatus.valor,
+            idCategoria: produtoStatus.idCategoria,
+            nomeCategoria: produtoStatus.nomeCategoria,
+            idFuncionario: produtoStatus.idFuncionario,
+            nomeFuncionario: produtoStatus.nomeFuncionario,
+            dataFabricacao: produtoStatus.dataFabricacao,
+            fotoLink: produtoStatus.fotoLink,
+            // valor: precoRandomico
+        }
+        salvaListaDeProdutos(produtoComPreco)
+        // setModal (false);
+    }
 
     return (
         <Modal
@@ -64,7 +85,7 @@ export const ModalStatus = ({ modal, setModal, id, ...rest }: ModalStatusProps) 
                             </View>
                         </View>
                     </ScrollView>
-                    <TouchableOpacity style={styles.botao}>
+                    <TouchableOpacity style={styles.botao} onPress={()=> botaProdutoNoCarrinho()}>
                         <Text style={styles.textButton}>COMPRAR</Text>
                     </TouchableOpacity>
                 </View>
