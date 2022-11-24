@@ -12,7 +12,8 @@ import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
-import CustomAlert from "../../Components/CustomAlert";
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import IconSeta from "../../Components/IconSeta/IconSeta";
 //#endregion
 
 export const Cadastro = ({ navigation }) => {
@@ -85,14 +86,7 @@ export const Cadastro = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => Home()}>
-          <AntDesign
-            name="arrowleft"
-            size={24}
-            color="white"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
+        <IconSeta onPress={Home} />
         <Image style={styles.logo} source={logo} />
         <Text style={styles.textoLogo}>Cadastro</Text>
         <View style={styles.areaLogin}>

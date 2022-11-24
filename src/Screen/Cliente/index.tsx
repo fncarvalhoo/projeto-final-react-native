@@ -1,18 +1,13 @@
 //#region Imports
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, Image, ScrollView } from "react-native";
 import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
-import { AntDesign } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
-import CustomAlert from "../../Components/CustomAlert";
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import TextInputComponent from "../../Components/TextInput/TextInput";
+import IconSeta from "../../Components/IconSeta/IconSeta";
+import ButtonComponent from "../../Components/Botao/Botao";
 //#endregion
 
 export const Cliente = ({ navigation }) => {
@@ -95,66 +90,25 @@ export const Cliente = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => Home()}>
-          <AntDesign
-            name="arrowleft"
-            size={24}
-            color="white"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
+        <IconSeta onPress={Home} />
         <Image style={styles.logo} source={logo} />
         <Text style={styles.textoLogo}>Editar Perfil</Text>
         <View style={styles.areaLogin}>
-          <TextInput
-            placeholder="CPF"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setCpf(e)}
+          <TextInputComponent placeHolder={"CPF"} setValue={setCpf} />
+          <TextInputComponent placeHolder={"Nome"} setValue={setNome} />
+          <TextInputComponent
+            placeHolder={"Nome de Usuário"}
+            setValue={setUsuario}
           />
-          <TextInput
-            placeholder="Nome"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setNome(e)}
-          />
-          <TextInput
-            placeholder="Nome de Usuário"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setUsuario(e)}
-          />
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setEmail(e)}
-          />
-          <TextInput
-            placeholder="Senha"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setSenha(e)}
-          />
-          <TextInput
-            placeholder="Data de Nascimento"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setDataNascimento(e)}
+          <TextInputComponent placeHolder={"Email"} setValue={setEmail} />
+          <TextInputComponent placeHolder={"Senha"} setValue={setSenha} />
+          <TextInputComponent
+            placeHolder={"Data de Nascimento"}
+            setValue={setDataNascimento}
           />
         </View>
-        <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
-          <Text style={styles.textoBotao}>Atualizar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={handleDeleteProduct}>
-          <Text style={styles.textoBotao}>Deletar</Text>
-        </TouchableOpacity>
+        <ButtonComponent setAction={handleSubmit} texto={"Atualizar"} />
+        <ButtonComponent setAction={handleDeleteProduct} texto={"Deletar"} />
         <CustomAlert
           titulo={titulo}
           mensagem={mensagem}
