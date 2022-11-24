@@ -1,8 +1,20 @@
 import { useEffect, useState } from "react";
-import { View, Text, StatusBar, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList, } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import logoNav from "../../Assets/LogoNav.png";
 import { styles } from "./styled";
-import { getProduto, listaProdutos, } from "../../Services/repository/produtoRepository";
+import {
+  getProduto,
+  listaProdutos,
+} from "../../Services/repository/produtoRepository";
 import { textChangeRangeIsUnchanged } from "typescript";
 import { ProdutoCard } from "../../Components/ProdutoComponent/index";
 import { ModalStatus } from "../../Components/Modais/Modal";
@@ -11,14 +23,14 @@ export const Home = () => {
   const [carregando, setCarregando] = useState<boolean>(true);
   const [listaProdutos, setlistaProdutos] = useState<listaProdutos[]>([]);
 
- const [indexSelecionado, setIndexSelecionado] = useState<string>("");
- const [modal, setModal] = useState<boolean>(false);
+  const [indexSelecionado, setIndexSelecionado] = useState<string>("");
+  const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    requisicaoListaProdutos()
+    requisicaoListaProdutos();
   }, []);
 
-  function requisicaoListaProdutos(){
+  function requisicaoListaProdutos() {
     setCarregando(true);
     getProduto()
       .then((res) => {
@@ -38,11 +50,7 @@ export const Home = () => {
         backgroundColor="black"
       />
       <View>
-        <View style={styles.nav}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.textButton}>LOGIN</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.nav}></View>
         <Image source={logoNav} style={styles.logo} />
         {carregando ? (
           <ActivityIndicator size={"large"} />
@@ -52,21 +60,22 @@ export const Home = () => {
             numColumns={2}
             renderItem={({ item }) => {
               return (
-                <ProdutoCard 
-                produto={item}
-                setIndexSelecionado={setIndexSelecionado}
-                setModal={setModal}
-                 />
+                <ProdutoCard
+                  produto={item}
+                  setIndexSelecionado={setIndexSelecionado}
+                  setModal={setModal}
+                />
               );
             }}
           />
         )}
-        {modal &&
-        <ModalStatus
-          id={indexSelecionado}
-          modal={modal}
-          setModal={setModal}
-      />}
+        {modal && (
+          <ModalStatus
+            id={indexSelecionado}
+            modal={modal}
+            setModal={setModal}
+          />
+        )}
       </View>
     </View>
   );
