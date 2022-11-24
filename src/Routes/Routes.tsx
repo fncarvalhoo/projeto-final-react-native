@@ -7,6 +7,9 @@ import { Register } from "../Screen/Register";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { Carrinho } from "../Screen/Carrinho";
+import { FontAwesome5 } from '@expo/vector-icons';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,6 +42,15 @@ function Tabs() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Carrinho"
+        component={Carrinho}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="shopping-cart" size={size} color={color} />
           ),
         }}
       />
@@ -80,6 +92,11 @@ export default function Routes() {
         component={Tabs}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+          name="Carrinho"
+          component={Carrinho}
+          options={{ headerShown: false }}
+          />
     </Stack.Navigator>
   );
 }

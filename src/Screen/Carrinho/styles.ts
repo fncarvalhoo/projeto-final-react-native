@@ -33,9 +33,6 @@ export const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10, 
-        justifyContent:"space-between", 
-        flexDirection: 'row'
     }
 
 })
