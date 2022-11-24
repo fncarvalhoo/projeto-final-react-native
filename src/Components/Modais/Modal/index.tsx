@@ -48,6 +48,7 @@ export const ModalStatus = ({ modal, setModal, id, ...rest }: ModalStatusProps) 
             fotoLink: produtoStatus.fotoLink,
             // valor: precoRandomico
         }
+        console.log(produtoComPreco.id)
         salvaListaDeProdutos(produtoComPreco)
         setModal (false);
     }

@@ -5,10 +5,12 @@ import { PageClient } from "./src/Screen/PageClient/index";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Carrinho } from "./src/Screen/Carrinho";
+import { ProvedorCarrinho } from "./src/Context/CarrinhoContext";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+    <ProvedorCarrinho>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -38,5 +40,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </ProvedorCarrinho>
   );
 }

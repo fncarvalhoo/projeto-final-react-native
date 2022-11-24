@@ -17,7 +17,7 @@ export const ProdutoCard = ({ produto, setModal, setPrecoSelecionado, setIndexSe
     function abreModal(){
         setModal(true);
         setIndexSelecionado(produto.id);
-        setPrecoSelecionado && setPrecoSelecionado(produto.valor)
+        // setPrecoSelecionado && setPrecoSelecionado(produto.valor)
     }
 
     return <TouchableOpacity onPress={abreModal}>
