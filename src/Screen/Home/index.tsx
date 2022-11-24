@@ -19,19 +19,19 @@ import { textChangeRangeIsUnchanged } from "typescript";
 import { ProdutoCard } from "../../Components/ProdutoComponent/index";
 import { ModalStatus } from "../../Components/Modais/Modal";
 
-export const Home = ({navigation}) => {
+export const Home = ({ navigation }) => {
   const [carregando, setCarregando] = useState<boolean>(true);
   const [listaProdutos, setlistaProdutos] = useState<listaProdutos[]>([]);
 
   const [indexSelecionado, setIndexSelecionado] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
 
- const Carrinho = () => {
-  navigation.reset({
-    index:0,
-    routes: [{name:"Carrinho"}]
-  })
- }
+  const Carrinho = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Carrinho" }],
+    });
+  };
 
   useEffect(() => {
     requisicaoListaProdutos();
@@ -57,12 +57,6 @@ export const Home = ({navigation}) => {
         backgroundColor="black"
       />
       <View>
-
-        <View style={styles.nav}>
-          <TouchableOpacity style={styles.button} onPress={Carrinho}>
-            <Text style={styles.textButton}>LOGIN</Text>
-          </TouchableOpacity>
-        </View>
         <View style={styles.nav}></View>
 
         <Image source={logoNav} style={styles.logo} />

@@ -8,8 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Carrinho } from "../Screen/Carrinho";
-import { FontAwesome5 } from '@expo/vector-icons';
-
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,6 +26,18 @@ function Tabs() {
         tabBarActiveTintColor: "#fff",
       }}
     >
+      <Tab.Screen
+        name="Login"
+        component={Login}
+        options={{
+          tabBarStyle: {
+            display: "none",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="sign-in" size={size} color={color} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Home"
         component={Home}
@@ -54,18 +65,6 @@ function Tabs() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Login"
-        component={Login}
-        options={{
-          tabBarStyle: {
-            display: "none",
-          },
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="sign-in" size={size} color={color} />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }
@@ -73,12 +72,12 @@ export default function Routes() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="Login"
         component={Tabs}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Login"
+        name="Home"
         component={Tabs}
         options={{ headerShown: false }}
       />
@@ -93,10 +92,10 @@ export default function Routes() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-          name="Carrinho"
-          component={Carrinho}
-          options={{ headerShown: false }}
-          />
+        name="Carrinho"
+        component={Carrinho}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
