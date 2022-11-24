@@ -1,20 +1,17 @@
+//#region Imports
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, Image, ScrollView } from "react-native";
 import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
-import { createPrefix } from "typescript";
-export const Cliente = () => {
-  const [id, setId] = useState("");
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import TextInputComponent from "../../Components/TextInput/TextInput";
+import IconSeta from "../../Components/IconSeta/IconSeta";
+import ButtonComponent from "../../Components/Botao/Botao";
+//#endregion
+
+export const Cliente = ({ navigation }) => {
+  //#region Values
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [email, setEmail] = useState("");
@@ -22,6 +19,26 @@ export const Cliente = () => {
   const [senha, setSenha] = useState("");
   const [usuario, setUsuario] = useState("");
 
+  const [titulo, setTitulo] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [visibleDialog, setVisibleDialog] = useState(false);
+  //#endregion
+
+  //#region FunctionsParaCustomAlert
+  const showDialog = (titulo, mensagem, tipo) => {
+    setVisibleDialog(true);
+    setTitulo(titulo);
+    setMensagem(mensagem);
+    setTipo(tipo);
+  };
+
+  const hideDialog = (status) => {
+    setVisibleDialog(status);
+  };
+  //#endregion
+
+  //#region FunctionPut
   const handleSubmit = (event) => {
     const dados = {
       cpf: cpf,
@@ -32,102 +49,73 @@ export const Cliente = () => {
       usuario: usuario,
     };
     event.preventDefault();
+    // clienteService
+    //   .getUserByCpf(cpf)
+    //   .then((res) => {
     clienteService
-      .getUserById(id)
-      .then((response) => {
-        console.log(id);
-        console.log("Deu certo");
-        clienteService.putCliente(id, dados);
+      .putCliente(cpf, dados)
+      .then((res) => {
+        showDialog("Sucesso", "Conta atualizada com sucesso", "SUCESSO");
       })
+      // })
       .catch((error) => {
-        // showDialog("Erro", "Email inválido", "ERRO");
-        console.log(error);
-        console.log("Deu erro");
+        showDialog("Erro", "Problema ao atualizar a conta", "ERRO");
       });
   };
+  //#endregion
 
+  //#region FunctionDelete
   function handleDeleteProduct(event) {
     event.preventDefault();
     clienteService
-      .deleteCliente(id)
+      .deleteCliente(cpf)
       .then((response) => {
-        console.log(response);
+        showDialog("Sucesso", "Conta deletada com sucesso", "SUCESSO");
       })
       .catch((error) => {
-        console.log(error);
+        showDialog("Erro", "Problema ao deletar conta", "ERRO");
       });
   }
+  //#endregion
+
+  //#region Navigation
+  const Home = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Home" }],
+    });
+  };
+  //#endregion
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <AntDesign
-          name="arrowleft"
-          size={24}
-          color="white"
-          style={styles.icon}
-        />
+        <IconSeta onPress={Home} />
         <Image style={styles.logo} source={logo} />
         <Text style={styles.textoLogo}>Editar Perfil</Text>
         <View style={styles.areaLogin}>
-          <TextInput
-            placeholder="ID"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setId(e)}
+          <TextInputComponent placeHolder={"CPF"} setValue={setCpf} />
+          <TextInputComponent placeHolder={"Nome"} setValue={setNome} />
+          <TextInputComponent
+            placeHolder={"Nome de Usuário"}
+            setValue={setUsuario}
           />
-          <TextInput
-            placeholder="CPF"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setCpf(e)}
-          />
-          <TextInput
-            placeholder="Nome"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setNome(e)}
-          />
-          <TextInput
-            placeholder="Nome de Usuário"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setUsuario(e)}
-          />
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setEmail(e)}
-          />
-          <TextInput
-            placeholder="Senha"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setSenha(e)}
-          />
-          <TextInput
-            placeholder="Data de Nascimento"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setDataNascimento(e)}
+          <TextInputComponent placeHolder={"Email"} setValue={setEmail} />
+          <TextInputComponent placeHolder={"Senha"} setValue={setSenha} />
+          <TextInputComponent
+            placeHolder={"Data de Nascimento"}
+            setValue={setDataNascimento}
           />
         </View>
-        {/* Colocar aqui um ALERT ''perfil atualizado com sucesso   */}
-        <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
-          <Text style={styles.textoBotao}>Atualizar</Text>
-        </TouchableOpacity>
-        {/* Colocar aqui um ALERT ''perfil Deletado com sucesso */}
-        <TouchableOpacity style={styles.botao} onPress={handleDeleteProduct}>
-          <Text style={styles.textoBotao}>Deletar</Text>
-        </TouchableOpacity>
+        <ButtonComponent setAction={handleSubmit} texto={"Atualizar"} />
+        <ButtonComponent setAction={handleDeleteProduct} texto={"Deletar"} />
+        <CustomAlert
+          titulo={titulo}
+          mensagem={mensagem}
+          tipo={tipo}
+          visible={visibleDialog}
+          onClose={hideDialog}
+        ></CustomAlert>
       </View>
     </ScrollView>
   );

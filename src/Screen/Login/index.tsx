@@ -13,7 +13,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
 import { setSyntheticLeadingComments } from "typescript";
-import CustomAlert from "../../Components/CustomAlert";
+import CustomAlert from "../../Components/CustomAlert/CustomAlert";
+import IconSeta from "../../Components/IconSeta/IconSeta";
 
 export const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -80,14 +81,7 @@ export const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => Home()}>
-        <AntDesign
-          name="arrowleft"
-          size={24}
-          color="white"
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+      <IconSeta onPress={Home} />
       <Image style={styles.logo} source={logo} />
       <Text style={styles.textoLogo}>Login</Text>
       <View style={styles.areaLogin}>
