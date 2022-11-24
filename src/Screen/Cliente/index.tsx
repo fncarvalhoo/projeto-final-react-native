@@ -1,3 +1,4 @@
+//#region Imports
 import React, { useState } from "react";
 import {
   Text,
@@ -10,11 +11,12 @@ import {
 import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
-import { createPrefix } from "typescript";
-export const Cliente = () => {
-  const [id, setId] = useState("");
+import CustomAlert from "../../Components/CustomAlert";
+//#endregion
+
+export const Cliente = ({ navigation }) => {
+  //#region Values
   const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [email, setEmail] = useState("");
@@ -22,6 +24,26 @@ export const Cliente = () => {
   const [senha, setSenha] = useState("");
   const [usuario, setUsuario] = useState("");
 
+  const [titulo, setTitulo] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [visibleDialog, setVisibleDialog] = useState(false);
+  //#endregion
+
+  //#region FunctionsParaCustomAlert
+  const showDialog = (titulo, mensagem, tipo) => {
+    setVisibleDialog(true);
+    setTitulo(titulo);
+    setMensagem(mensagem);
+    setTipo(tipo);
+  };
+
+  const hideDialog = (status) => {
+    setVisibleDialog(status);
+  };
+  //#endregion
+
+  //#region FunctionPut
   const handleSubmit = (event) => {
     const dados = {
       cpf: cpf,
@@ -32,51 +54,58 @@ export const Cliente = () => {
       usuario: usuario,
     };
     event.preventDefault();
+    // clienteService
+    //   .getUserByCpf(cpf)
+    //   .then((res) => {
     clienteService
-      .getUserById(id)
-      .then((response) => {
-        console.log(id);
-        console.log("Deu certo");
-        clienteService.putCliente(id, dados);
+      .putCliente(cpf, dados)
+      .then((res) => {
+        showDialog("Sucesso", "Conta atualizada com sucesso", "SUCESSO");
       })
+      // })
       .catch((error) => {
-        // showDialog("Erro", "Email inválido", "ERRO");
-        console.log(error);
-        console.log("Deu erro");
+        showDialog("Erro", "Problema ao atualizar a conta", "ERRO");
       });
   };
+  //#endregion
 
+  //#region FunctionDelete
   function handleDeleteProduct(event) {
     event.preventDefault();
     clienteService
-      .deleteCliente(id)
+      .deleteCliente(cpf)
       .then((response) => {
-        console.log(response);
+        showDialog("Sucesso", "Conta deletada com sucesso", "SUCESSO");
       })
       .catch((error) => {
-        console.log(error);
+        showDialog("Erro", "Problema ao deletar conta", "ERRO");
       });
   }
+  //#endregion
+
+  //#region Navigation
+  const Home = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Home" }],
+    });
+  };
+  //#endregion
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <AntDesign
-          name="arrowleft"
-          size={24}
-          color="white"
-          style={styles.icon}
-        />
+        <TouchableOpacity onPress={() => Home()}>
+          <AntDesign
+            name="arrowleft"
+            size={24}
+            color="white"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
         <Image style={styles.logo} source={logo} />
         <Text style={styles.textoLogo}>Editar Perfil</Text>
         <View style={styles.areaLogin}>
-          <TextInput
-            placeholder="ID"
-            placeholderTextColor="#000000"
-            style={styles.input}
-            selectionColor={"black"}
-            onChangeText={(e) => setId(e)}
-          />
           <TextInput
             placeholder="CPF"
             placeholderTextColor="#000000"
@@ -120,14 +149,19 @@ export const Cliente = () => {
             onChangeText={(e) => setDataNascimento(e)}
           />
         </View>
-        {/* Colocar aqui um ALERT ''perfil atualizado com sucesso   */}
         <TouchableOpacity style={styles.botao} onPress={handleSubmit}>
           <Text style={styles.textoBotao}>Atualizar</Text>
         </TouchableOpacity>
-        {/* Colocar aqui um ALERT ''perfil Deletado com sucesso */}
         <TouchableOpacity style={styles.botao} onPress={handleDeleteProduct}>
           <Text style={styles.textoBotao}>Deletar</Text>
         </TouchableOpacity>
+        <CustomAlert
+          titulo={titulo}
+          mensagem={mensagem}
+          tipo={tipo}
+          visible={visibleDialog}
+          onClose={hideDialog}
+        ></CustomAlert>
       </View>
     </ScrollView>
   );

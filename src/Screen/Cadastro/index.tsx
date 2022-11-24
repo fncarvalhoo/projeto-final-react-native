@@ -1,3 +1,4 @@
+//#region Imports
 import React, { useState } from "react";
 import {
   Text,
@@ -10,11 +11,12 @@ import {
 import { styles } from "./style";
 import logo from "../../Assets/Logo_Game_Story.png";
 import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import clienteService from "../../Services/requests/clienteService";
 import CustomAlert from "../../Components/CustomAlert";
+//#endregion
 
 export const Cadastro = ({ navigation }) => {
+  //#region Values
   const [email, setEmail] = useState("");
   const [usuario, setUsuario] = useState("");
   const [nome, setNome] = useState("");
@@ -26,7 +28,9 @@ export const Cadastro = ({ navigation }) => {
   const [mensagem, setMensagem] = useState("");
   const [tipo, setTipo] = useState("");
   const [visibleDialog, setVisibleDialog] = useState(false);
+  //#endregion
 
+  //#region FunctionsParaCustomAlert
   const showDialog = (titulo, mensagem, tipo) => {
     setVisibleDialog(true);
     setTitulo(titulo);
@@ -37,7 +41,9 @@ export const Cadastro = ({ navigation }) => {
   const hideDialog = (status) => {
     setVisibleDialog(status);
   };
+  //#endregion
 
+  //#region FunctionPost
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -59,7 +65,9 @@ export const Cadastro = ({ navigation }) => {
         showDialog("Erro", "Cadastro inválido", "ERRO");
       });
   };
+  //#endregion
 
+  //#region Navigation
   const Logar = () => {
     navigation.reset({
       index: 0,
@@ -72,6 +80,8 @@ export const Cadastro = ({ navigation }) => {
       routes: [{ name: "Home" }],
     });
   };
+  //#endregion
+
   return (
     <ScrollView>
       <View style={styles.container}>

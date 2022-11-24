@@ -4,24 +4,24 @@ const postCliente = (data) => {
   return api.post(`cliente`, data);
 };
 
-const putCliente = (id, data) => {
-  return api.put(`cliente/${id}`, data);
+const putCliente = (cpf, data) => {
+  return api.put(`cliente/cpf/${cpf}`, data);
 };
 
 const getUserByEmail = (email) => {
   return api.get(`cliente/email/${email}`);
 };
 
-const getUserById = (id) => {
-  return api.get(`cliente/${id}`);
+const getUserByCpf = (cpf) => {
+  return api.get(`cliente/cpf/${cpf}`);
 };
 
 const getUserBySenha = (senha) => {
   return api.get(`cliente/senha/${senha}`);
 };
 
-const deleteCliente = (id) => {
-  return api.delete(`cliente/${id}`);
+const deleteCliente = (cpf) => {
+  return api.delete(`cliente/cpf/${cpf}`);
 };
 
 const clienteService = {
@@ -29,7 +29,7 @@ const clienteService = {
   getUserByEmail,
   getUserBySenha,
   putCliente,
-  getUserById,
+  getUserByCpf,
   deleteCliente,
 };
 export default clienteService;
