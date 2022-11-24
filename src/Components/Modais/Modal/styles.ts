@@ -82,4 +82,13 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
       },
+      img:{
+        width:280,
+        height:280
+    },
+    footerContainer:{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginRight:60
+    },
 })
